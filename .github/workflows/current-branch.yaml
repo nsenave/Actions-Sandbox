@@ -1,6 +1,6 @@
 name: Hello
 
-on:
+on: 
   workflow_dispatch:
   push:
     branches:
@@ -15,7 +15,9 @@ jobs:
       - name: Checkout repo on triggering branch
         uses: actions/checkout@v3
         with:
-          repository: nsenave/ Actions-Sandbox
-          ref: ${{ ref }}
+          repository: nsenave/Actions-Sandbox
+          ref: ${{ github.ref }}
       - name: Print something
-        run: ./hello.sh
+        run: |
+          chmod +x hello.sh
+          ./hello.sh
