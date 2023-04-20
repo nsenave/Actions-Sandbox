@@ -1,0 +1,22 @@
+name: Hello
+
+on: 
+  workflow_dispatch
+  push:
+    branches:
+      - main
+    tags:
+      - v3.*
+      - !v3.*-SNAPSHOT
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo on triggering branch
+        uses: actions/checkout@v3
+        with:
+          repository: nsenave/ Actions-Sandbox
+          ref: ${{ ref }}
+      - name: Print something
+        run: ./hello.sh
