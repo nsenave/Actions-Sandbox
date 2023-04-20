@@ -1,13 +1,12 @@
 name: Hello
 
-on: 
-  workflow_dispatch
+on:
+  workflow_dispatch:
   push:
     branches:
       - main
     tags:
       - v3.*
-      - !v3.*-SNAPSHOT
 
 jobs:
   build:
