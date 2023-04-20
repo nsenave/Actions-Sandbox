@@ -18,4 +18,6 @@ jobs:
           repository: nsenave/Actions-Sandbox
           ref: ${{ github.ref }}
       - name: Print something
-        run: ./hello.sh
+        run: |
+          chmod +x hello.sh
+          ./hello.sh
