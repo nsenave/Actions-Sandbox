@@ -1,0 +1,11 @@
+name: Hello from orphan branch
+
+on: 
+  push:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "hello from orphan branch"
+      
