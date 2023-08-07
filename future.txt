@@ -3,3 +3,5 @@ Tag with v3.* pattern should trigger the workflow.
 Some commit on main
 
 other
+
+another
