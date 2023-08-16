@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Create release note
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          fromTag: ${{ github.sha }}
+          toTag: 'v3.2.1'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          writeToFile: false
+          excludeTypes: docs,other,style
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          tag_name: 'v3.2.1'
+          target_commitish: ${{ github.head_ref || github.ref }}
+          name: 'v3.2.1'
+          body: ${{steps.changelog.outputs.changes}}
