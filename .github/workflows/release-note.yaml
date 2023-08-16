@@ -15,15 +15,8 @@ jobs:
         id: changelog
         uses: requarks/changelog-action@v1
         with:
-          fromTag: ${{ github.sha }}
+          fromTag: 'v3.2.2'
           toTag: 'v3.2.1'
           token: ${{ secrets.GITHUB_TOKEN }}
-          writeToFile: false
+          writeToFile: true
           excludeTypes: docs,other,style
-
-      - uses: softprops/action-gh-release@v1
-        with:
-          tag_name: 'v3.2.1'
-          target_commitish: ${{ github.head_ref || github.ref }}
-          name: 'v3.2.1'
-          body: ${{steps.changelog.outputs.changes}}
