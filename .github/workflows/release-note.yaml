@@ -15,8 +15,8 @@ jobs:
         id: changelog
         uses: requarks/changelog-action@v1
         with:
-          fromTag: 'v3.2.2'
-          toTag: 'v1.0.0'
+          fromTag: '4.1.0'
+          toTag: '4.0.0'
           token: ${{ secrets.GITHUB_TOKEN }}
           writeToFile: true
           excludeTypes: docs,other,style
