@@ -1,4 +1,4 @@
-name: Deploy
+name: Release note
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         uses: requarks/changelog-action@v1
         with:
           fromTag: 'v3.2.2'
-          toTag: 'v3.2.1'
+          toTag: 'v1.0.0'
           token: ${{ secrets.GITHUB_TOKEN }}
           writeToFile: true
           excludeTypes: docs,other,style
