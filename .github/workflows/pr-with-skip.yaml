@@ -6,7 +6,7 @@ on:
 
 jobs:
   test: 
-    if: github.event.pull_request.draft == false # && ${{ ! contains(github.event.pull_request.labels.*.name, 'foo-label') }}
+    if: ${{ (github.event.pull_request.draft == false) && !contains(github.event.pull_request.labels.*.name, 'foo-label') }}
     runs-on: ubuntu-latest
     steps:
       - run: exit 1
