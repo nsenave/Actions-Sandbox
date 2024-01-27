@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  NEW_TAG: "v4.1.7"
+  NEW_TAG: "v4.1.8"
 
 jobs:
   create-release:
@@ -49,7 +49,7 @@ jobs:
           makeLatest: 'false'
 
       - name: Commit CHANGELOG.md
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: main
           commit_message: 'docs(changelog): ${{env.NEW_TAG}} update [skip ci]'
