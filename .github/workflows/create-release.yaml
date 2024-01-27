@@ -1,0 +1,22 @@
+name: Create not latest release
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - run: echo "foo"
+      - uses: actions/checkout@v4
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: "v4.1.1"
+          commit: ${{ github.head_ref || github.ref }}
+          name: "v4.1.1"
+          body: "bar"
+          makeLatest: 'false'
