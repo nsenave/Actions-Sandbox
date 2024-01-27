@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  NEW_TAG: "v4.1.4"
+  NEW_TAG: "v4.1.5"
 
 jobs:
   create-release:
@@ -31,7 +31,6 @@ jobs:
           toTag:  ${{ steps.previousTag.outputs.previousTag }}
           excludeTypes: style,chore,other
           token: ${{ secrets.GITHUB_TOKEN }}
-          writeToFile: true
 
       - uses: ncipollo/release-action@v1
         with:
