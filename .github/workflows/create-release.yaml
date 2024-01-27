@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  NEW_TAG: "v4.1.2"
+  NEW_TAG: "v4.1.3"
 
 jobs:
   create-release:
@@ -38,5 +38,5 @@ jobs:
           tag: ${{env.NEW_TAG}}
           commit: ${{ github.head_ref || github.ref }}
           name: ${{env.NEW_TAG}}
-          body: "bar"
+          body: ${{steps.changelog.outputs.changes}}
           makeLatest: 'false'
