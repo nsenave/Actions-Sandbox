@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  NEW_TAG: "v4.1.8"
+  NEW_TAG: "v4.1.9"
 
 jobs:
   create-release:
