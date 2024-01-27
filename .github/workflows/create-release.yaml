@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  NEW_TAG: "v4.1.6"
+  NEW_TAG: "v4.1.7"
 
 jobs:
   create-release:
@@ -23,13 +23,19 @@ jobs:
         id: previousTag
         run: echo "previousTag=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | grep "^v[0-9]\+\.[0-9]\+\.[0-9]\+$" | tail -1)" >> $GITHUB_OUTPUT
 
+      - name: Create tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{env.NEW_TAG}}
+
       - name: Create release note
         id: changelog
         uses: requarks/changelog-action@v1
         with:
-          fromTag: ${{ github.sha }}
+          fromTag: ${{env.NEW_TAG}}
           toTag:  ${{ steps.previousTag.outputs.previousTag }}
           excludeTypes: style,chore,other
+          excludeScopes: changelog # do not include changelog commits
           token: ${{ secrets.GITHUB_TOKEN }}
           writeToFile: true
           changelogFilePath: CHANGELOG.md
