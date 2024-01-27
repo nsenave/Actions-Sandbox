@@ -5,18 +5,35 @@ on:
     branches:
       - 'main'
 
+env:
+  NEW_TAG: "v4.1.2"
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - run: echo "foo"
       - uses: actions/checkout@v4
+
+      - name: Get previous v2 release tag
+        id: previousTag
+        run: echo "previousTag=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | grep "^v[0-9]\+\.[0-9]\+\.[0-9]\+$" | tail -1)" >> $GITHUB_OUTPUT
+
+      - name: Create release note
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          fromTag: ${{ github.sha }}
+          toTag:  ${{ steps.previousTag.outputs.previousTag }}
+          excludeTypes: style,chore,other
+          token: ${{ secrets.GITHUB_TOKEN }}
+          writeToFile: true
+
       - uses: ncipollo/release-action@v1
         with:
-          tag: "v4.1.1"
+          tag: ${{env.NEW_TAG}}
           commit: ${{ github.head_ref || github.ref }}
-          name: "v4.1.1"
+          name: ${{env.NEW_TAG}}
           body: "bar"
           makeLatest: 'false'
