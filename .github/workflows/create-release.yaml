@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  NEW_TAG: "v4.1.5"
+  NEW_TAG: "v4.1.6"
 
 jobs:
   create-release:
@@ -31,6 +31,8 @@ jobs:
           toTag:  ${{ steps.previousTag.outputs.previousTag }}
           excludeTypes: style,chore,other
           token: ${{ secrets.GITHUB_TOKEN }}
+          writeToFile: true
+          changelogFilePath: CHANGELOG.md
 
       - uses: ncipollo/release-action@v1
         with:
@@ -39,3 +41,10 @@ jobs:
           name: ${{env.NEW_TAG}}
           body: ${{steps.changelog.outputs.changes}}
           makeLatest: 'false'
+
+      - name: Commit CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: main
+          commit_message: 'docs(changelog): ${{env.NEW_TAG}} update [skip ci]'
+          file_pattern: CHANGELOG.md
