@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  NEW_TAG: "v4.1.10"
+  NEW_TAG: "v4.1.11"
 
 jobs:
   create-release:
@@ -48,6 +48,16 @@ jobs:
           body: ${{steps.changelog.outputs.changes}}
           makeLatest: 'false'
 
+  commit-changelog:
+    needs: create-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
       - name: Commit CHANGELOG.md
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
