@@ -24,11 +24,35 @@ jobs:
       - name: test echo emoji
         run: echo "👌"
 
-      - id: version
-        uses: conventional-actions/next-version@v1
-        with:
-          prefix: ""
 
-      - run: |
-          echo "Next version:"
-          echo "${{steps.version.outputs.version}}"
+
+  get-version:
+    runs-on: ubuntu-latest
+    outputs:
+      next_version: ${{ steps.semantic.outputs.version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required to get tags!
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator --save-dev
+
+      - name: Compute Next Version (Dry Run)
+        id: semantic
+        run: |
+          VERSION=$(npx semantic-release --dry-run | grep -oP 'The next release version is \K[0-9]+\.[0-9]+\.[0-9]+')
+          echo "Calculated version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show Version
+        run: echo "Next version is ${{ steps.semantic.outputs.version }}"
