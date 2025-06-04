@@ -43,7 +43,7 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm install semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator --save-dev
+        run: npm install semantic-release @semantic-release/commit-analyzer --save-dev
 
       - name: Compute Next Version (Dry Run)
         id: semantic
