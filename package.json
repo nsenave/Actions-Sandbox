@@ -1,0 +1,9 @@
+{
+  "name": "my-project",
+  "version": "x",
+  "private": true,
+  "scripts": {},
+  "devDependencies": {
+    "semantic-release": "^19.0.0"
+  }
+}
